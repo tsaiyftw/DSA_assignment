@@ -322,10 +322,10 @@ def draw(grid):
     DAALUCanvas1.delete('all') 
     width=50
     height=50
-    for col in range(grid.numRows()):
+    for col in range(grid.numCols()):
         x1=50+col*width
         x2=x1+width
-        for row in range(grid.numCols()):
+        for row in range(grid.numRows()):
             y1=50+row*height
             y2=y1+height
             DAALUCanvas1.create_rectangle(x1,y1,x2,y2,fill='lightgreen')
