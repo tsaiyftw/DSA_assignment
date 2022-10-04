@@ -316,7 +316,7 @@ def evolve(grid):
     iii = iii + 1
     if int(n) == iii:
         sss = r"""
-# Print the text-based representation
+# ouput the result to Canvas
 
 def draw(grid):
     DAALUCanvas1.delete('all') 
