@@ -78,6 +78,6 @@ for item in lst:
 # lowercase letter: 97~122 in ASCII
 for i in range(26):
     print(
-        "%c-%4d %c-%4d"
+        "%c-%4d; %c-%3d"
         % (chr(65 + i), theCounter[65 + i], chr(97 + i), theCounter[97 + i])
     )
