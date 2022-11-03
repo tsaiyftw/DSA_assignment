@@ -169,7 +169,7 @@ class MultiArray:
         self._factors[self.numDims() - 1] = 1
 
 
-class mySet:
+class binarySet:
     # Creates an empty set instance.
     def __init__(self):
         self._theElements = list()
@@ -181,7 +181,7 @@ class mySet:
     # Determines if an element is in the set.
     def __contains__(self, element):
         ndx = self._findPosition(element)
-        return ndx < len(self) and self._theElements[ndx] == element
+        return ndx < len(self._theElements) and self._theElements[ndx] == element
 
     # Adds a new unique element to the set.
     def add(self, element):
@@ -211,14 +211,14 @@ class mySet:
         low = 0
         high = len(self._theElements) - 1
         while low <= high:
-            mid = (high + low) / 2
+            mid = (high + low) // 2
             if self._theElements[mid] == element:
                 return mid
             elif element < self._theElements[mid]:
                 high = mid - 1
             else:
                 low = mid + 1
-                return low
+        return low
 
 
 class linearSet:
@@ -260,7 +260,7 @@ class linearSet:
 
     # Creates a new set from the union of this set and setB.
     def union(self, setB):
-        newSet = Set()
+        newSet = linearSet()
         newSet._theElements.extend(self._theElements)
         for element in setB:
             if element not in self:

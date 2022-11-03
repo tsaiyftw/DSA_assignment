@@ -1,5 +1,6 @@
 from myarray import myArray2D
 from myarray import linearSet
+from myarray import binarySet
 
 # read matrix A data from txt file
 m_data = open("mA.txt", "r")
@@ -66,18 +67,39 @@ def multiplyM_TM():
 
 multiplyM_TM()
 
+# create a new empty set
 mA_set = linearSet()
 
+# load data from text file to set
+def transferMatrixToSet():
+    # read data from txt and store in a list
+    m_data = open("mA.txt", "r")
+    data_line = m_data.read()
+    entry_lst = data_line.replace("\n", " ").split()
+    m_data.close()
+    # add the value in the list to the set
+    for i in range(len(entry_lst)):
+        mA_set.add(int(entry_lst[i]))
+    return print("The values in Set A: ", mA_set._theElements)
 
-def creatSet():
-    set_data = open("mA.txt", "r")
-    data_val = set_data.read()
-    m_entry = data_val.replace("\n", " ").split()
-    print(m_entry)
-    for i in range(len(m_entry)):
-        print(m_entry[i])
-        mA_set.add(int(m_entry[i]))
-    print(mA_set._theElements)
+
+transferMatrixToSet()
+
+m_biSet = binarySet()
 
 
-creatSet()
+def addTobinarySet():
+    # read data from txt and store in a list
+    m_data = open("mA.txt", "r")
+    data_line = m_data.read()
+    entry_lst = data_line.replace("\n", " ").split()
+    m_data.close()
+    # add the value in the list to the set
+    for i in range(len(entry_lst)):
+        # print("before", m_biSet._theElements)
+        m_biSet.add(int(entry_lst[i]))
+        # print("after: ", m_biSet._theElements)
+    return print("The values in binary Set A: ", m_biSet._theElements)
+
+
+addTobinarySet()
