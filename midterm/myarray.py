@@ -287,3 +287,69 @@ class _SetIterator:
             return item
         else:
             raise StopIteration
+
+
+class SparseMatrix:
+    #  create a sparse matrix of size numRows * numCols initialized to 0
+    def __init__(self, numRows, numCols):
+        self._numRows = numRows
+        self._numCols = numCols
+        self._elementList = list()
+
+    # return the number of rows in the matrix
+    def numRows(self):
+        return self._numRows
+
+    # return the number of columns in the matrix
+    def numCols(self):
+        return self._numCols
+
+    # return the value of element(i,j): x[i,j]
+    def __getitem__(self, ndxTuple):
+        assert len(ndxTuple) == 2, "Invalid number of array subscripts."
+        row = ndxTuple[0]
+        col = ndxTuple[1]
+        assert (
+            row >= 0 and row < self.numRows() and col >= 0 and col < self.numCols()
+        ), "Array subscripts out of range."
+        ndx = self._findPosition(row, col)
+        if ndx is not None:
+            val = self._elementList[ndx].value
+            return val
+        else:
+            return None
+
+    # set the value of element(i,j) to value s: x[i,j] = s
+    def __setitem__(self, ndxTuple, scalar):
+        ndx = self._findPosition(ndxTuple[0], ndxTuple[1])
+        if ndx is not None:  # if the element is found in the list
+            if scalar != 0.0:
+                self._elementList[ndx].value = scalar
+            else:
+                self._elementList.pop(ndx)
+        else:  # if the element is not zero and not in the list
+            if scalar != 0.0:
+                element = _MatrixElement(ndxTuple[0], ndxTuple[1], scalar)
+                self._elementList.append(element)
+
+    # scale the matrix by the given scalar
+    def scaleBy(self, scalar):
+        for element in self._elementList:
+            element.value *= scalar
+
+    # helper method used to find a specific matrix element(row,col) in the list of non-zero entries.
+    # None is returned if the element is not found
+    def _findPosition(self, row, col):
+        n = len(self._elementList)
+        for i in range(n):
+            if row == self._elementList[i].row and col == self._elementList[i].col:
+                return i  # return the index of the element if found
+        return None  # return None when the element is not found
+
+
+# storage class for holding the non-zero matrix elements
+class _MatrixElement:
+    def __init__(self, row, col, value):
+        self.row = row
+        self.col = col
+        self.value = value

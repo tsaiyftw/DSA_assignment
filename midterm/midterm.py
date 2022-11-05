@@ -1,6 +1,7 @@
 from myarray import myArray2D
 from myarray import linearSet
 from myarray import binarySet
+from myarray import SparseMatrix
 
 # read matrix A data from txt file
 m_data = open("mA.txt", "r")
@@ -103,3 +104,49 @@ def addTobinarySet():
 
 
 addTobinarySet()
+
+# create a new empty sparse matrix
+sparseM = SparseMatrix(10, 10)
+
+# load the non-zero element in matrix A to Sparse matrix ADT
+def toSparseMatrix():
+    for i in range(ROW_AMOUNT):
+        for j in range(COLUMN_AMOUNT):
+            sparseM[i, j] = matrix_row_major[i, j]
+    for ndx in range(len(sparseM._elementList)):
+        print(
+            f"{ndx}th non-zero element in matrix A[ {sparseM._elementList[ndx].row},{sparseM._elementList[ndx].col}]: {sparseM._elementList[ndx].value}"
+        )
+    return sparseM
+
+
+toSparseMatrix()
+
+# sort a sequence in ascending order using the bubble sort algorithm
+
+
+def bubbleSort(seq):
+    n = len(seq)
+    swap_count = 0
+    # perform n-i bubble operations on the sequence
+    for i in range(n - 1):
+        # bubble the largest item to the right
+        for j in range(n - 1 - i):
+            if seq[j] > seq[j + 1]:  # swap the j and j+1 items
+                seq[j], seq[j + 1] = seq[j + 1], seq[j]
+                swap_count += 1
+    print(swap_count)
+    return seq
+
+
+m_data = open("mA.txt", "r")
+data_line = m_data.read()
+entry_lst = data_line.replace("\n", " ").split()
+m_data.close()
+lst_com = [int(entry_lst[i]) for i in range(len(entry_lst))]
+big_lst = [
+    lst_com[j : j + COLUMN_AMOUNT] for j in range(0, len(lst_com), COLUMN_AMOUNT)
+]
+for i in range(len(big_lst)):
+    bubbleSort(big_lst[i])
+    print(bubbleSort(big_lst[i]))
