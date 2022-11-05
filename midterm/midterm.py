@@ -1,7 +1,8 @@
-from myarray import myArray2D
-from myarray import linearSet
-from myarray import binarySet
-from myarray import SparseMatrix
+from myarray import myArray2D, linearSet, binarySet, SparseMatrix
+
+# from myarray import linearSet
+# from myarray import binarySet
+# from myarray import SparseMatrix
 
 # read matrix A data from txt file
 m_data = open("mA.txt", "r")
@@ -68,16 +69,21 @@ def multiplyM_TM():
 
 multiplyM_TM()
 
+# retrieve each entry from matrix and store in a list
+def dumpData():
+    m_data = open("mA.txt", "r")
+    data = m_data.read()
+    entry_lst = data.replace("\n", " ").split()
+    m_data.close()
+    return entry_lst
+
+
 # create a new empty set
 mA_set = linearSet()
 
 # load data from text file to set
 def transferMatrixToSet():
-    # read data from txt and store in a list
-    m_data = open("mA.txt", "r")
-    data_line = m_data.read()
-    entry_lst = data_line.replace("\n", " ").split()
-    m_data.close()
+    entry_lst = dumpData()
     # add the value in the list to the set
     for i in range(len(entry_lst)):
         mA_set.add(int(entry_lst[i]))
@@ -90,11 +96,7 @@ m_biSet = binarySet()
 
 
 def addTobinarySet():
-    # read data from txt and store in a list
-    m_data = open("mA.txt", "r")
-    data_line = m_data.read()
-    entry_lst = data_line.replace("\n", " ").split()
-    m_data.close()
+    entry_lst = dumpData()
     # add the value in the list to the set
     for i in range(len(entry_lst)):
         # print("before", m_biSet._theElements)
@@ -139,14 +141,15 @@ def bubbleSort(seq):
     return seq
 
 
-m_data = open("mA.txt", "r")
-data_line = m_data.read()
-entry_lst = data_line.replace("\n", " ").split()
-m_data.close()
-lst_com = [int(entry_lst[i]) for i in range(len(entry_lst))]
-big_lst = [
-    lst_com[j : j + COLUMN_AMOUNT] for j in range(0, len(lst_com), COLUMN_AMOUNT)
-]
-for i in range(len(big_lst)):
-    bubbleSort(big_lst[i])
-    print(bubbleSort(big_lst[i]))
+def returnSwap():
+    entry_lst = dumpData()
+    lst_com = [int(entry_lst[i]) for i in range(len(entry_lst))]
+    big_lst = [
+        lst_com[j : j + COLUMN_AMOUNT] for j in range(0, len(lst_com), COLUMN_AMOUNT)
+    ]
+    for i in range(len(big_lst)):
+        bubbleSort(big_lst[i])
+        print(bubbleSort(big_lst[i]))
+
+
+returnSwap()
