@@ -74,6 +74,10 @@ class myArray2D:
     def numCols(self):
         return len(self._theRows[0])
 
+    # get the entries in the nth row
+    def getRow(self, row):
+        return self._theRows[row]
+
     # Clears the array by setting every element to the given value
     def clear(self, value):
         for row in range(self.numRows()):
