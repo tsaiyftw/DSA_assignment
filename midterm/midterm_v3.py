@@ -5,10 +5,19 @@ from myarray import myArray2D, linearSet, binarySet, SparseMatrix
 def readfile(input_file_pathway):
     big_lst = []
     with open(input_file_pathway) as f:
-        lines = f.readlines()
+        # read each line and remove the empty lines
+        lines = [line for line in f.readlines() if line.strip()]
         for i in range(len(lines)):
-            entry_row = lines[i].split()
+            entry_row = lines[i].replace(",", " ").split()
+            # check if each entry is a number
+            if not all(e.isdigit() for e in entry_row):
+                raise ValueError("Cannot include non numeric element in a matrix")
             big_lst.append([int(entry) for entry in entry_row])
+            # check if each row has the same number of entries
+            it = iter(big_lst)
+            len_small = len(next(it))
+            if not all(len(samll_lst) == len_small for samll_lst in big_lst):
+                raise ValueError("Not all rows have the same number of entries")
     return big_lst
 
 
@@ -54,7 +63,9 @@ def findValueColMajor(data, index):
 def multiply(matrixA, matrixB):
     aRow, aCol = matrixA.numRows(), matrixA.numCols()
     bRow, bCol = matrixB.numRows(), matrixB.numCols()
-    assert aCol == bRow
+    assert (
+        aCol == bRow
+    ), "The row number of matrix A is not equal to the col number of matrix B"
     res = myArray2D(aRow, bCol)
     for i in range(aRow):
         for j in range(bCol):
@@ -138,16 +149,13 @@ printMatrix(matrix)
 
 # Q3:
 lst = matrixToList(matrixA)
-print("Store the values in matrix to a set with binary search implement: ", toSet(lst))
-print(
-    "Stor the values in matrix to a set with linear search implement:: ",
-    toLinearSet(lst),
-)
+print("Store the entries to a set with binary search implement: ", toSet(lst))
+print("Store the entries to a set with linear search implement: ", toLinearSet(lst))
 
 # Q4:
 matrixSparse = toSparseMatrix(matrixA)
 print(
-    "Store the non-zeore values in a sparse matrix to a list(Format: [row index, column indx, value]): "
+    "Store the non-zeore values in a sparse matrix to a list(Format: [row index, column index, value]): "
 )
 printSparseMatrix(matrixSparse)
 
